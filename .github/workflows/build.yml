@@ -36,13 +36,13 @@ jobs:
         run: npm run check
 
       - name: Build Windows installer
-        shell: pwsh
+        shell: cmd
         run: |
-          npm run dist:win *>&1 | Tee-Object -FilePath build-windows.log
-          if (-not (Get-ChildItem -Path dist -Filter "*.exe" -ErrorAction SilentlyContinue)) {
-            Write-Error "Windows installer was not created."
-            exit 1
-          }
+          npm run dist:win > build-windows.log 2>&1
+          if exist dist\*.exe exit /b 0
+          type build-windows.log
+          echo Windows installer was not created.
+          exit /b 1
 
       - name: Upload Windows artifact
         if: always()
