@@ -1,0 +1,79 @@
+{
+  "name": "ai-dj",
+  "version": "0.1.0",
+  "description": "AI DJ desktop player for NetEase Cloud Music with configurable OpenAI-compatible and MiMo APIs.",
+  "main": "src/main.js",
+  "private": true,
+  "author": "mmmccc49",
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check src/main.js && node --check src/preload.js && node --check src/renderer.js",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win nsis x64",
+    "dist:mac": "electron-builder --mac dmg zip"
+  },
+  "devDependencies": {
+    "electron": "^37.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.mmmccc49.aidj",
+    "productName": "AI DJ",
+    "copyright": "Copyright 2026 mmmccc49",
+    "asar": true,
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "!**/.env",
+      "!**/.env.*",
+      "!**/tmp/**",
+      "!**/start.*.log"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist"
+    },
+    "win": {
+      "icon": "assets/app-icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "AI DJ"
+    },
+    "mac": {
+      "icon": "assets/app-icon.png",
+      "category": "public.app-category.music",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "dmg": {
+      "title": "AI DJ"
+    }
+  }
+}

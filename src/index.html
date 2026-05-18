@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloudio Player</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="player" id="player">
+      <audio id="audio"></audio>
+
+      <header class="titlebar">
+        <div class="titlebar-brand">
+          <button id="toggleViewBtn" class="btn-icon btn-widget-toggle" type="button" title="Toggle widget mode">
+            <svg class="icon-widget" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2.5" y="3" width="11" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="6" cy="8" r="1.1" fill="currentColor"/>
+              <circle cx="10" cy="8" r="1.1" fill="currentColor"/>
+              <path d="M5 11H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <svg class="icon-full" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M5 3H3v2M11 3h2v2M5 13H3v-2M11 13h2v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <span class="brand-dot"></span>
+          <span class="brand-name">CLOUDIO</span>
+        </div>
+        <div class="titlebar-actions">
+          <button id="minimizeBtn" class="btn-icon" type="button" title="Minimize">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="7" width="12" height="2" rx="1" fill="currentColor"/>
+            </svg>
+          </button>
+          <button id="closeBtn" class="btn-icon btn-close" type="button" title="Close">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="player-section">
+        <div class="cover-container">
+          <div class="cover-glow"></div>
+          <div class="cover-disc" id="coverDisc">
+            <img id="coverImage" alt="" />
+            <div class="cover-fallback" id="coverFallback">
+              <span id="coverTitle">PLAY</span>
+            </div>
+            <div class="cover-center-hole"></div>
+          </div>
+        </div>
+
+        <div class="track-info">
+          <h2 class="track-title" id="trackTitle">Loading...</h2>
+          <p class="mini-clock" id="miniClock">0:00</p>
+          <p class="track-artist" id="trackArtist">Cloudio Player</p>
+        </div>
+
+        <div class="progress-section">
+          <input id="progress" type="range" min="0" max="1000" value="0" class="progress-bar" aria-label="Progress" />
+          <div class="time-row">
+            <span id="elapsed">0:00</span>
+            <span id="duration">0:00</span>
+          </div>
+        </div>
+
+        <div class="transport-controls">
+          <button id="prevBtn" class="btn-transport" type="button" title="Previous">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+            </svg>
+          </button>
+          <button id="playBtn" class="btn-play" type="button" title="Play/Pause">
+            <svg class="icon-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="icon-pause" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+          <button id="nextBtn" class="btn-transport" type="button" title="Next">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="playlist-section">
+        <div class="module-switch" role="tablist" aria-label="Player modules">
+          <button id="playlistTabBtn" class="module-tab active" type="button" role="tab" aria-selected="true">
+            <span>歌单</span>
+            <span class="module-count"><span id="trackCount">0</span> tracks</span>
+          </button>
+          <button id="sideTabBtn" class="module-tab" type="button" role="tab" aria-selected="false">
+            <span>DJ</span>
+            <span class="module-count">AI host</span>
+          </button>
+        </div>
+
+        <div id="playlistPane" class="content-pane playlist-pane active">
+          <div class="module-heading">
+            <div class="module-heading-copy">
+              <span>PLAYLIST</span>
+              <strong id="playlistName">DAILY</strong>
+            </div>
+            <div class="module-heading-actions">
+              <button id="shuffleBtn" type="button" class="btn-sm btn-icon" title="Shuffle playlist" aria-label="Shuffle playlist">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M16 3h5v5M4 7h3.3c2.4 0 3.5 1.1 5.2 4.9 1.7 3.9 2.8 5.1 5.2 5.1H21M21 16v5h-5M4 17h3.1c1.5 0 2.5-.4 3.4-1.7M14.5 8.6c.9-1.2 1.8-1.6 3.2-1.6H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button id="settingsBtn" type="button" class="btn-sm btn-icon" title="API settings" aria-label="API settings">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 15.4a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8Z" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 0 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.3 7A2 2 0 0 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 0 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.1a2 2 0 0 1 0 4H21a1.7 1.7 0 0 0-1.6 1Z" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="playlist" class="playlist-list"></div>
+        </div>
+
+        <div id="sidePane" class="content-pane side-pane">
+          <div class="dj-panel">
+            <div id="djMessages" class="dj-messages" aria-live="polite"></div>
+            <div class="dj-prompts" aria-label="Quick DJ prompts">
+              <button id="heartBtn" class="dj-prompt" type="button">心动模式</button>
+              <div class="favorite-picker">
+                <button id="favoritesMenuBtn" class="dj-prompt" type="button" aria-expanded="false">收藏歌单</button>
+                <div id="favoritesMenu" class="favorite-menu" hidden>
+                  <div id="favoritesMenuList" class="favorite-menu-list"></div>
+                </div>
+              </div>
+              <button id="dailyBtn" class="dj-prompt" type="button">每日推荐</button>
+            </div>
+            <form id="djForm" class="dj-form">
+              <input id="djInput" type="text" placeholder="和 DJ 说：想听什么歌、歌单或心情..." autocomplete="off" />
+              <button id="djSendBtn" class="btn-dj-send" type="submit" title="Send">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <div class="status-bar">
+        <span class="status-dot"></span>
+        <span id="statusLabel">NETEASE</span>
+      </div>
+
+      <div id="settingsModal" class="settings-modal" hidden>
+        <div class="settings-backdrop" data-close-settings></div>
+        <section class="settings-sheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+          <header class="settings-header">
+            <div>
+              <span>SETTINGS</span>
+              <h3 id="settingsTitle">接口配置</h3>
+            </div>
+            <button id="settingsCloseBtn" class="btn-sm btn-icon" type="button" title="Close settings" aria-label="Close settings">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </header>
+
+          <form id="settingsForm" class="settings-form">
+            <label class="settings-field settings-field-wide">
+              <span>网易云 Cookie</span>
+              <textarea id="neteaseCookieInput" rows="3" spellcheck="false" placeholder="MUSIC_U=...; NMTID=..."></textarea>
+            </label>
+
+            <div class="settings-group-title">OpenAI-compatible DJ</div>
+            <label class="settings-field settings-field-wide">
+              <span>URL 地址</span>
+              <input id="openaiBaseUrlInput" type="url" inputmode="url" spellcheck="false" placeholder="https://api.example.com/v1" />
+            </label>
+            <label class="settings-field">
+              <span>模型名称</span>
+              <input id="openaiModelInput" type="text" spellcheck="false" placeholder="gpt-4o-mini" />
+            </label>
+            <label class="settings-field">
+              <span>Key</span>
+              <input id="openaiApiKeyInput" type="password" spellcheck="false" autocomplete="off" placeholder="sk-..." />
+            </label>
+
+            <div class="settings-group-title">MiMo 语音模型</div>
+            <label class="settings-field settings-field-wide">
+              <span>URL 地址</span>
+              <input id="mimoBaseUrlInput" type="url" inputmode="url" spellcheck="false" placeholder="https://token-plan-cn.xiaomimimo.com/v1" />
+            </label>
+            <label class="settings-field">
+              <span>模型名称</span>
+              <input id="mimoModelInput" type="text" spellcheck="false" placeholder="mimo-v2.5-tts-voicedesign" />
+            </label>
+            <label class="settings-field">
+              <span>Key</span>
+              <input id="mimoApiKeyInput" type="password" spellcheck="false" autocomplete="off" placeholder="mimo key" />
+            </label>
+
+            <div class="settings-actions">
+              <span id="settingsHint">保存后立即生效，并写入本机用户配置。</span>
+              <button id="settingsSaveBtn" class="btn-settings-save" type="submit">保存</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
