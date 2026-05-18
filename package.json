@@ -9,8 +9,8 @@
     "start": "electron .",
     "check": "node --check src/main.js && node --check src/preload.js && node --check src/renderer.js",
     "dist": "electron-builder",
-    "dist:win": "electron-builder --win nsis x64",
-    "dist:mac": "electron-builder --mac dmg zip"
+    "dist:win": "electron-builder --win --x64",
+    "dist:mac": "electron-builder --mac --x64 --arm64"
   },
   "devDependencies": {
     "electron": "^37.0.0",
