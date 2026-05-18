@@ -38,7 +38,7 @@ jobs:
       - name: Build Windows installer
         shell: cmd
         run: |
-          npm run dist:win > build-windows.log 2>&1
+          call npm run dist:win > build-windows.log 2>&1
           if exist dist\*.exe exit /b 0
           type build-windows.log
           echo Windows installer was not created.
