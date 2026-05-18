@@ -10,7 +10,7 @@
     "check": "node --check src/main.js && node --check src/preload.js && node --check src/renderer.js",
     "dist": "electron-builder",
     "dist:win": "electron-builder --win --x64",
-    "dist:mac": "electron-builder --mac --x64 --arm64"
+    "dist:mac": "electron-builder --mac zip --x64"
   },
   "devDependencies": {
     "electron": "^37.0.0",
@@ -53,27 +53,15 @@
       "shortcutName": "AI DJ"
     },
     "mac": {
-      "icon": "assets/app-icon.png",
       "category": "public.app-category.music",
       "target": [
         {
-          "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
-        },
-        {
           "target": "zip",
           "arch": [
-            "x64",
-            "arm64"
+            "x64"
           ]
         }
       ]
-    },
-    "dmg": {
-      "title": "AI DJ"
     }
   }
 }
