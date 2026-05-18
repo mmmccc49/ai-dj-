@@ -101,7 +101,7 @@ function writeEnvValues(updates, envPath = getUserEnvPath()) {
     nextLines.push(`${key}=${serializeEnvValue(updates[key])}`);
   }
 
-  fs.writeFileSync(ENV_PATH, `${nextLines.join("\n").replace(/\s+$/g, "")}\n`, "utf8");
+  fs.writeFileSync(envPath, `${nextLines.join("\n").replace(/\s+$/g, "")}\n`, "utf8");
 }
 
 function getAppInfo() {
