@@ -39,7 +39,10 @@ jobs:
         shell: pwsh
         run: |
           npm run dist:win *>&1 | Tee-Object -FilePath build-windows.log
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Get-ChildItem -Path dist -Filter "*.exe" -ErrorAction SilentlyContinue)) {
+            Write-Error "Windows installer was not created."
+            exit 1
+          }
 
       - name: Upload Windows artifact
         if: always()
@@ -75,8 +78,11 @@ jobs:
 
       - name: Build macOS installer
         run: |
-          set -o pipefail
           npm run dist:mac 2>&1 | tee build-macos.log
+          test -n "$(find dist -maxdepth 1 -name '*.zip' -print -quit)" || {
+            echo "macOS zip was not created."
+            exit 1
+          }
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
 
