@@ -1,7 +1,7 @@
 {
   "name": "ai-dj",
   "version": "0.1.0",
-  "description": "AI DJ desktop player for NetEase Cloud Music with configurable OpenAI-compatible and MiMo APIs.",
+  "description": "A plug-and-play AI radio desktop player for NetEase Cloud Music. Fill in your API settings and start listening.",
   "main": "src/main.js",
   "private": true,
   "author": "mmmccc49",
