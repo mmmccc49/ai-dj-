@@ -293,9 +293,6 @@ function setViewMode(mode) {
 }
 
 function registerShortcuts() {
-  globalShortcut.register("Space", () => {
-    mainWindow?.webContents.send("player:shortcut", "toggle");
-  });
   globalShortcut.register("CommandOrControl+Right", () => {
     mainWindow?.webContents.send("player:shortcut", "next");
   });
