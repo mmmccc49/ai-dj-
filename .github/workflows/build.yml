@@ -108,6 +108,9 @@ jobs:
     if: always() && startsWith(github.ref, 'refs/tags/')
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -126,3 +129,4 @@ jobs:
             release-artifacts/**/*.zip
             release-artifacts/**/*.blockmap
             release-artifacts/**/*.yml
+            uninstall/*
